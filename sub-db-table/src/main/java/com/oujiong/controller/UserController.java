@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -36,11 +38,29 @@ public class UserController {
      */
     @PostConstruct
     private void getData() {
-        userList.add(new User(1L,"小小", "女", 2,  "12"+dbId_01 +"4444567890246"));//分库时 会对 （2,4）截取 dbId
-        userList.add(new User(2L,"爸爸", "男", 30, "12"+dbId_01 +"5554567890246" ));
-        userList.add(new User(3L,"妈妈", "女", 28, "12"+dbId_02 +"6664567890246" ));
-        userList.add(new User(4L,"爷爷", "男", 64, "12"+dbId_02 +"7774567890246"));
-        userList.add(new User(5L,"奶奶", "女", 62, "12"+dbId_02 +"8884567890246"));
+        userList.add(new User(1L,"小小", "女", 2,  getRandom(2) +dbId_01 + getRandom(13)));//分库时 会对 （2,4）截取 dbId
+        userList.add(new User(2L,"爸爸", "男", 30, getRandom(2) +dbId_01 + getRandom(13)));
+        userList.add(new User(3L,"妈妈", "女", 28, getRandom(2) +dbId_01 + getRandom(13)));
+        userList.add(new User(4L,"爷爷", "男", 64, getRandom(2) +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, getRandom(2) +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "10" +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "20" +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "30" +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "40" +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "50" +dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "60"+dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "70"+dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "80"+dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "90"+dbId_02 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "11" +dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "20" +dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "30" +dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "40" +dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "50" +dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "60"+dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "70"+dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "80"+dbId_01 + getRandom(13)));
+        userList.add(new User(5L,"奶奶", "女", 62, "90"+dbId_01 + getRandom(13)));
     }
     /**
      * http://localhost:8088/save-user
@@ -48,6 +68,15 @@ public class UserController {
      */
     @PostMapping("save-user")
     public Object saveUser() {
+        Long maxId = userService.selectMaxId();
+        maxId = maxId == null ? 1 : maxId;
+        AtomicInteger i = new AtomicInteger(1);
+        Long finalMaxId = maxId;
+        userList.forEach(user -> {
+            user.setId(finalMaxId + i.get());
+            user.setName(user.getName()+ user.getId());
+            i.getAndIncrement();
+        });
         return userService.insertForeach(userList);
     }
     /**
@@ -58,6 +87,22 @@ public class UserController {
     public Object listUser() {
         return userService.list();
     }
+
+
+
+     /**
+      * 获取指定长度的数字随机数
+      * @param size 随机数个数
+      * @return 指定长度的数字随机数的字符串
+      */
+     public static String getRandom(int size) {
+         Random random = new Random();
+         StringBuilder sb = new StringBuilder(size);
+         for (int i = 0; i < size; i++) {
+             sb.append(random.nextInt(9));
+         }
+         return sb.toString();
+   }
 
 
 }

@@ -28,13 +28,12 @@ public final class WaybillTableShardingAlgorithm implements PreciseShardingAlgor
         }
         throw new UnsupportedOperationException();
     }*/
-
-
     private static final Logger LOG = LogManager.getLogger(WaybillTableShardingAlgorithm.class);
     private int startWith = 1;
     private int paddedSize = 3;
     private String split = "_";
 
+    @Override
     public String doSharding(Collection<String> targetNames, PreciseShardingValue<Long> shardingValue) {//shardingValue 表名 字段名 值
         //补全是17位运单ID
         final String paddedValue = Paddings.padding(Segments.CYD_PADDED_SIZE,String.valueOf(shardingValue.getValue()));

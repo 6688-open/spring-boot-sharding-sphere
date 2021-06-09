@@ -28,4 +28,10 @@ public interface UserMapper {
      */
     List<User> selectAll();
 
+    /**
+     * 查询数据库中ID最大的值
+     * @return
+     */
+    Long selectMaxId();
+
 }

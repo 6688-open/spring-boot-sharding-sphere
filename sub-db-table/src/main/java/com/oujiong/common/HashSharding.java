@@ -20,7 +20,7 @@ public class HashSharding {
     public static String sharding(Collection<String> targetNames, String shardingValue, int startWith, int paddedSize, String split){
         final long hash = Math.abs(MurmurHash.hash(shardingValue));
         final int targetSize = targetNames.size();
-        final long suffixIndex = startWith + (hash % targetSize);
+        final long suffixIndex = startWith + (hash % targetSize);  //hash 取模  均匀落到每一个表里面
         LOG.error("startWith:{},paddedSize:{},split:{},shardingValue:{},hashValue:{},targetSize:{}",
                 startWith,paddedSize,split,shardingValue,hash,targetSize);
         String suffix = Paddings.padding(split, paddedSize, (int)suffixIndex);

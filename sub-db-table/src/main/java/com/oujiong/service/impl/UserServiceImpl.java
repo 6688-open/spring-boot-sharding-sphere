@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
         userMapper.insertForeach(userList);
         return "保存成功";
     }
+
+    @Override
+    public Long selectMaxId() {
+        return userMapper.selectMaxId();
+    }
 }

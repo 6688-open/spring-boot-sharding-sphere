@@ -22,5 +22,10 @@ public interface UserService {
      * @param userVOList
      */
     String  insertForeach(List<User> userVOList);
+    /**
+     * 查询数据库中ID最大的值
+     * @return
+     */
+    Long selectMaxId();
 
 }
