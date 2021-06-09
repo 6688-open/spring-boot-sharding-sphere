@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Description: 用户相关接口
  *
- * @author xub
+ * @author wj
  * @date 2019/8/24 下午6:32
  */
 public interface UserService {

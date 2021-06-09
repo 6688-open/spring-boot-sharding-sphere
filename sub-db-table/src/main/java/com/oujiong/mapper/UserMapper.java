@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @Description: 用户mapper
  *
- * @author xub
+ * @author wj
  * @date 2019/10/8 下午9:23
  */
 @Mapper
